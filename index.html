@@ -33,6 +33,7 @@
         const App = () => {
             const [activeTab, setActiveTab] = useState(null);
             const [isModalOpen, setIsModalOpen] = useState(false);
+            const [selectedLaw, setSelectedLaw] = useState({ title: "", img: "" });
 
             const guideData = [
                 {
@@ -41,13 +42,48 @@
                     icon: "📚",
                     color: "blue",
                     items: [
-                        "UU No 25 tahun 2004",
-                        "UU Nomor 59 Tahun 2024",
-                        "UU no 17 tahun 2003",
-                        "PP Nomor 6 Tahun 2023",
-                        "PP No 4 tahun 2006",
-                        "PP No. 17 Tahun 2017",
-                        "permen 1 tahun 2021"
+                        { 
+                            name: "UU No 25 tahun 2004", 
+                            hasModal: true, 
+                            img: "UUNo25tahun2004.jpg", 
+                            link: "https://peraturan.bpk.go.id/details/40694" 
+                        },
+                        { 
+                            name: "UU Nomor 59 Tahun 2024", 
+                            hasModal: true, 
+                            img: "UUNomor59Tahun2024.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        },
+                        { 
+                            name: "UU no 17 tahun 2003", 
+                            hasModal: true, 
+                            img: "UUNo17Tahun2003.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        },
+                        { 
+                            name: "PP Nomor 6 Tahun 2023", 
+                            hasModal: true, 
+                            img: "PPNomor6Tahun2023.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        },
+                         { 
+                            name: "PP No 40 tahun 2006", 
+                            hasModal: true, 
+                            img: "PPNo40Tahun2006.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        },
+                         { 
+                            name: "PP No. 17 Tahun 2017", 
+                            hasModal: true, 
+                            img: "PPNo17Tahun2017.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        },
+                         { 
+                            name: "permen PPN No. 1 tahun 2021", 
+                            hasModal: true, 
+                            img: "Permen1tahun2021.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        }
                     ]
                 },
                 {
@@ -56,10 +92,12 @@
                     icon: "⚖️",
                     color: "emerald",
                     items: [
-                        "Koordinasi Alokasi: Penyiapan rumusan kebijakan pendanaan pusat & daerah.",
-                        "Sinkronisasi: Penyelarasan program prioritas nasional di daerah.",
-                        "Penyusunan Pagu: Fasilitasi penetapan pagu indikatif dan anggaran.",
-                        "Pemantauan: Evaluasi atas efektivitas alokasi pendanaan."
+                        { 
+                            name: "Tugas dan Fungsi", 
+                            hasModal: true, 
+                            img: "TugasdanFungsi.jpg", // <--- Ganti dengan nama file gambar UU 59 Anda
+                            link: "https://peraturan.bpk.go.id/details/297293" 
+                        }
                     ]
                 },
                 {
@@ -68,13 +106,18 @@
                     icon: "⏳",
                     color: "amber",
                     items: [
-                        "Jan-Feb: Penyusunan Arah Kebijakan & Prioritas Pembangunan.",
-                        "Maret-April: Pertemuan Tiga Pihak (Trilateral Meeting) & Rakortek.",
-                        "Mei-Juni: Penetapan Pagu Indikatif & Rencana Kerja Pemerintah.",
-                        "Agustus-Okt: Penelaahan RKAKL & Penetapan Alokasi Anggaran."
+                        { name: "Jan-Feb: Penyusunan Arah Kebijakan & Prioritas Pembangunan.", hasModal: false },
+                        { name: "Maret-April: Pertemuan Tiga Pihak (Trilateral Meeting) & Rakortek.", hasModal: false },
+                        { name: "Mei-Juni: Penetapan Pagu Indikatif & Rencana Kerja Pemerintah.", hasModal: false },
+                        { name: "Agustus-Okt: Penelaahan RKAKL & Penetapan Alokasi Anggaran.", hasModal: false }
                     ]
                 }
             ];
+
+            const openModal = (item) => {
+                setSelectedLaw({ title: item.name, img: item.img, link: item.link });
+                setIsModalOpen(true);
+            };
 
             return (
                 <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -136,18 +179,18 @@
                                             {child.items.map((item, idx) => (
                                                 <li 
                                                     key={idx} 
-                                                    className={`flex gap-3 text-sm p-2 rounded-lg transition-colors ${item === "UU No 25 tahun 2004" ? "hover:bg-blue-50 cursor-pointer text-blue-700 font-semibold" : "text-slate-600 font-medium"}`}
+                                                    className={`flex gap-3 text-sm p-2 rounded-lg transition-colors ${item.hasModal ? "hover:bg-blue-50 cursor-pointer text-blue-700 font-semibold" : "text-slate-600 font-medium"}`}
                                                     onClick={(e) => {
-                                                        if (item === "UU No 25 tahun 2004") {
+                                                        if (item.hasModal) {
                                                             e.stopPropagation();
-                                                            setIsModalOpen(true);
+                                                            openModal(item);
                                                         }
                                                     }}
                                                 >
                                                     <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 bg-${child.color}-500`} />
                                                     <span className="leading-relaxed">
-                                                        {item}
-                                                        {item === "UU No 25 tahun 2004" && " 🔍"}
+                                                        {item.name}
+                                                        {item.hasModal}
                                                     </span>
                                                 </li>
                                             ))}
@@ -165,7 +208,7 @@
                         </div>
                     </div>
 
-                    {/* Pop-up Modal untuk Mind Map */}
+                    {/* Pop-up Modal Dinamis */}
                     {isModalOpen && (
                         <div 
                             className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay animate-in fade-in duration-300"
@@ -177,7 +220,7 @@
                             >
                                 {/* Header Modal */}
                                 <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0 z-10">
-                                    <h2 className="text-xl font-bold text-slate-800">Mind Map: UU No 25 Tahun 2004</h2>
+                                    <h2 className="text-xl font-bold text-slate-800">Mind Map: {selectedLaw.title}</h2>
                                     <button 
                                         onClick={() => setIsModalOpen(false)}
                                         className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 hover:text-slate-600"
@@ -192,8 +235,8 @@
                                 <div className="p-4 flex-1 overflow-auto bg-slate-50">
                                     <div className="min-w-max min-h-max flex justify-center items-start">
                                         <img 
-                                            src="frame3-1.jpg" 
-                                            alt="Mind Map UU No 25 Tahun 2004"
+                                            src={selectedLaw.img} 
+                                            alt={`Mind Map ${selectedLaw.title}`}
                                             className="rounded-xl shadow-lg border border-slate-200"
                                         />
                                     </div>
@@ -202,12 +245,12 @@
                                 {/* Footer Modal */}
                                 <div className="p-4 text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest bg-white border-t border-slate-100">
                                     <a 
-                                        href="https://peraturan.bpk.go.id/details/40694" 
+                                        href={selectedLaw.link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="hover:text-blue-500 underline"
                                     >
-                                        Link Untuk Download File UU No 25 Tahun 2004
+                                        Link Untuk Download File {selectedLaw.title}
                                     </a>
                                 </div>
                             </div>
