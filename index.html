@@ -35,30 +35,6 @@
             const [isModalOpen, setIsModalOpen] = useState(false);
             const [selectedLaw, setSelectedLaw] = useState({ title: "", img: "" });
             const [zoom, setZoom] = useState(1);
-            const [origin, setOrigin] = useState({ x: 50, y: 50 });
-
-            const handleWheelZoom = (e) => {
-                e.preventDefault();
-
-                const rect = e.currentTarget.getBoundingClientRect();
-
-                // posisi mouse relatif ke container (%)
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-                setOrigin({ x, y });
-
-                const zoomSpeed = 0.001;
-
-                setZoom(prev => {
-                    let newZoom = prev - e.deltaY * zoomSpeed;
-
-                    if (newZoom < 0.5) newZoom = 0.5;
-                    if (newZoom > 3) newZoom = 3;
-
-                    return newZoom;
-                });
-            };
 
             const guideData = [
                 {
@@ -331,19 +307,13 @@
                                 </div>
                                 
                                 {/* Gambar Mind Map */}
-                                <div 
-                                    className="p-4 flex-1 overflow-auto bg-slate-50"
-                                    onWheel={handleWheelZoom}
-                                >
+                                <div className="p-4 flex-1 overflow-auto bg-slate-50">
                                     <div className="min-w-max min-h-max flex justify-center items-start">
-                                       <img 
+                                        <img 
                                             src={selectedLaw.img} 
                                             alt={`Mind Map ${selectedLaw.title}`}
                                             className="rounded-xl shadow-lg border border-slate-200 transition-transform duration-200"
-                                            style={{ 
-                                                transform: `scale(${zoom})`,
-                                                transformOrigin: `${origin.x}% ${origin.y}%`
-                                            }}
+                                            style={{ transform: `scale(${zoom})` }}
                                         />
                                     </div>
                                 </div>
@@ -366,7 +336,7 @@
                     <footer className="mt-20 text-center">
                         <div className="glass inline-flex items-center gap-4 px-6 py-3 rounded-full border border-white shadow-sm">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">
-                                Direktorat Alokasi Pendanaan Pembangunan Pusat dan Daerah
+                                Direktorat Alokasi Pendanaan Pusat dan Daerah
                             </span>
                         </div>
                     </footer>
