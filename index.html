@@ -36,6 +36,21 @@
             const [selectedLaw, setSelectedLaw] = useState({ title: "", img: "" });
             const [zoom, setZoom] = useState(1);
 
+            const handleWheelZoom = (e) => {
+                    e.preventDefault();
+
+                    const zoomSpeed = 0.001;
+                    setZoom(prev => {
+                        let newZoom = prev - e.deltaY * zoomSpeed;
+
+                        // batasi zoom
+                        if (newZoom < 0.5) newZoom = 0.5;
+                        if (newZoom > 3) newZoom = 3;
+
+                        return newZoom;
+                    });
+                };
+
             const guideData = [
                 {
                     id: 1,
@@ -307,7 +322,10 @@
                                 </div>
                                 
                                 {/* Gambar Mind Map */}
-                                <div className="p-4 flex-1 overflow-auto bg-slate-50">
+                                <div 
+                                    className="p-4 flex-1 overflow-auto bg-slate-50"
+                                    onWheel={handleWheelZoom}
+                                >
                                     <div className="min-w-max min-h-max flex justify-center items-start">
                                         <img 
                                             src={selectedLaw.img} 
